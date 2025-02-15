@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftfulUI
 
 struct SpotifyHomeView: View {
     @State private var products: [Product] = []
@@ -17,11 +18,9 @@ struct SpotifyHomeView: View {
             ScrollView(.vertical) {
                 LazyVStack(pinnedViews:[.sectionHeaders]) {
                     Section {
-                        ForEach(0..<20) { _ in
-                            Rectangle()
-                                .fill(Color.red)
-                                .frame(width: 200, height: 200)
-                        }
+                        VStack {
+                            recentsSection
+                        }.padding(.horizontal, 16)
                     } header:  {
                         header
                     }
@@ -34,17 +33,7 @@ struct SpotifyHomeView: View {
             try? await fetchProducts()
         }.toolbar(.hidden, for: .navigationBar)
     }
-    
-    func fetchProducts() async throws {
-        do {
-            let helper = DatabaseHelper()
-            products = try await helper.getProducts()
-            currentUser = try await helper.getUsers().first
-        } catch {
-            print("error =\(error.localizedDescription)")
-        }
-    }
-    
+
     private var header: some View {
         HStack(spacing: 0) {
             ZStack {
@@ -77,7 +66,28 @@ struct SpotifyHomeView: View {
         .padding(.leading, 8)
         .frame(maxWidth: .infinity)
         .background(.spotifyBlack)
-
+    }
+    
+    // Recents Section
+    private var recentsSection: some View {
+        NonLazyVGrid(columns: 2, alignment: .center, spacing: 10, items: self.products) { product in
+            
+            if let product {
+                SpotifyRecentsCell(imageName: product.firstImage, title: product.title)
+            }
+        }
+    }
+    
+    
+    
+    func fetchProducts() async throws {
+        do {
+            let helper = DatabaseHelper()
+            products = try await Array(helper.getProducts().prefix(8))
+            currentUser = try await helper.getUsers().first
+        } catch {
+            print("error =\(error.localizedDescription)")
+        }
     }
 }
 
