@@ -18,8 +18,12 @@ struct SpotifyHomeView: View {
             ScrollView(.vertical) {
                 LazyVStack(pinnedViews:[.sectionHeaders]) {
                     Section {
-                        VStack {
+                        VStack(spacing: 16) {
                             recentsSection
+                            if let product = products.first {
+                                newReleaseFunction(product: product)
+                            }
+                            
                         }.padding(.horizontal, 16)
                     } header:  {
                         header
@@ -78,8 +82,21 @@ struct SpotifyHomeView: View {
         }
     }
     
-    
-    
+    private func newReleaseFunction(product: Product) -> some View {
+        SpotifyNewReleaseCell(
+            imageName: product.firstImage,
+            headLine: product.brand,
+            subHeadLine: product.category,
+            title: product.title,
+            subtitle: product.description,
+            onAddToPlaylistPressed: {
+                
+            },
+            onPlayPreseed: {
+                
+            }
+        )
+    }
     func fetchProducts() async throws {
         do {
             let helper = DatabaseHelper()

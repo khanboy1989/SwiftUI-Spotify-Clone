@@ -20,7 +20,7 @@ struct ImageLoaderView: View {
                     .resizable()
                     .indicator(.activity)
                     .aspectRatio(contentMode: resizingMode)
-                    .allowsTightening(false)
+                    .allowsTightening(false) // Sets whether text in this view can compress the space between characters when necessary to fit text in a line.
             ).clipped()
         
     }

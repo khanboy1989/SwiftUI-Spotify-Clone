@@ -17,7 +17,7 @@ struct ProductArray: Codable {
 struct Product: Codable, Identifiable {
     let id: Int
     let title, description: String
-    let category: Category
+    let category: String
     let price, discountPercentage, rating: Double
     let stock: Int
     let tags: [String]
@@ -42,13 +42,6 @@ struct Product: Codable, Identifiable {
 enum AvailabilityStatus: String, Codable {
     case inStock = "In Stock"
     case lowStock = "Low Stock"
-}
-
-enum Category: String, Codable {
-    case beauty = "beauty"
-    case fragrances = "fragrances"
-    case furniture = "furniture"
-    case groceries = "groceries"
 }
 
 // MARK: - Dimensions
