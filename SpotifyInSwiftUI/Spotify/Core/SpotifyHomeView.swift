@@ -10,6 +10,7 @@ import SwiftfulUI
 
 struct SpotifyHomeView: View {
     @State private var products: [Product] = []
+    @State private var productRows: [ProductRow] = []
     @State private var currentUser: User? = nil
     @State private var selectedCategory: SpotifyCategory? = nil
     var body: some View {
@@ -20,15 +21,16 @@ struct SpotifyHomeView: View {
                     Section {
                         VStack(spacing: 16) {
                             recentsSection
+                                .padding(.horizontal, 16)
                             if let product = products.first {
                                 newReleaseFunction(product: product)
+                                    .padding(.horizontal, 16)
                             }
-                            
-                        }.padding(.horizontal, 16)
+                            listRows
+                        }
                     } header:  {
                         header
                     }
-
                 }.padding(.top, 8)
                 
             }.scrollIndicators(.hidden)
@@ -37,7 +39,7 @@ struct SpotifyHomeView: View {
             try? await fetchProducts()
         }.toolbar(.hidden, for: .navigationBar)
     }
-
+    
     private var header: some View {
         HStack(spacing: 0) {
             ZStack {
@@ -60,11 +62,9 @@ struct SpotifyHomeView: View {
                                 selectedCategory = category
                             }
                     }
-                }
-                .padding(.horizontal, 16)
+                }.padding(.horizontal, 16)
             }
             .scrollIndicators(.hidden)
-            
         }
         .padding(.vertical, 24)
         .padding(.leading, 8)
@@ -77,7 +77,40 @@ struct SpotifyHomeView: View {
         NonLazyVGrid(columns: 2, alignment: .center, spacing: 10, items: self.products) { product in
             
             if let product {
-                SpotifyRecentsCell(imageName: product.firstImage, title: product.title)
+                SpotifyRecentsCell(
+                    imageName: product.firstImage,
+                    title: product.title
+                ).asButton(.press) {
+                    
+                }
+            }
+        }
+    }
+    
+    private var listRows: some View {
+        ForEach(productRows) { row in
+            VStack(spacing: 8) {
+                Text(row.title)
+                    .font(.title)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.spotifyWhite)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 16)
+                
+                ScrollView(.horizontal) {
+                    HStack(alignment: .top ,spacing: 16) {
+                        ForEach(row.products) { product in
+                            ImageTitleRowCell(
+                                imageName: product.firstImage,
+                                title: product.title
+                            ).asButton(.press) {
+                                
+                            }
+                        }
+                    }.padding(.horizontal, 16)
+
+                }
+                .scrollIndicators(.hidden)
             }
         }
     }
@@ -102,6 +135,15 @@ struct SpotifyHomeView: View {
             let helper = DatabaseHelper()
             products = try await Array(helper.getProducts().prefix(8))
             currentUser = try await helper.getUsers().first
+            
+            var rows: [ProductRow] = []
+            let allBrands = Set(products.compactMap({ $0.brand }))
+            
+            for brand in allBrands {
+                rows.append(ProductRow(title: brand.capitalized, products: products))
+            }
+            productRows = rows
+            
         } catch {
             print("error =\(error.localizedDescription)")
         }
