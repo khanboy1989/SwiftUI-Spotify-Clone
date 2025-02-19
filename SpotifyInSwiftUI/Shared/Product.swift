@@ -37,6 +37,41 @@ struct Product: Codable, Identifiable {
     var firstImage: String {
         return images.first ?? Constants.randomImage
     }
+    
+    static var mock: Product {
+            return Product(
+                id: 123,
+                title: "Example Product Title",
+                description: "This is a mock product description.",
+                category: "Electronic Devices",
+                price: 999.99,
+                discountPercentage: 15.0,
+                rating: 4.5,
+                stock: 50,
+                tags: ["Tech", "Gadget", "Premium"],
+                brand: "Apple",
+                sku: "SKU-123456",
+                weight: 1200,
+                dimensions: Dimensions(width: 10.5, height: 5.0, depth: 1.2),
+                warrantyInformation: "1 Year Warranty",
+                shippingInformation: "Ships in 3-5 business days",
+                availabilityStatus: .inStock,
+                reviews: [
+                    Review(rating: 5, comment: "Great product!", date: .the20240523T085621618Z, reviewerName: "John Doe", reviewerEmail: "john@example.com"),
+                    Review(rating: 4, comment: "Good quality but expensive.", date: .the20240523T085621619Z, reviewerName: "Jane Doe", reviewerEmail: "jane@example.com")
+                ],
+                returnPolicy: .the30DaysReturnPolicy,
+                minimumOrderQuantity: 1,
+                meta: Meta(
+                    createdAt: .the20240523T085621618Z,
+                    updatedAt: .the20240523T085621619Z,
+                    barcode: "1234567890123",
+                    qrCode: "https://example.com/qr"
+                ),
+                images: [Constants.randomImage, Constants.randomImage, Constants.randomImage],
+                thumbnail: Constants.randomImage
+            )
+        }
 }
 
 enum AvailabilityStatus: String, Codable {
@@ -82,4 +117,24 @@ struct ProductRow: Identifiable {
     let id = UUID().uuidString
     let title: String
     let products: [Product]
+}
+
+extension ProductArray {
+    static var mock: ProductArray {
+        return ProductArray(
+            products: [Product.mock, Product.mock],
+            total: 2,
+            skip: 0,
+            limit: 10
+        )
+    }
+}
+
+extension ProductRow {
+    static var mock: ProductRow {
+        return ProductRow(
+            title: "Featured Products",
+            products: [Product.mock, Product.mock]
+        )
+    }
 }

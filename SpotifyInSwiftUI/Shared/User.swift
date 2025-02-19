@@ -34,6 +34,70 @@ struct User: Codable, Identifiable {
     let ein, ssn, userAgent: String
     let crypto: Crypto
     let role: Role
+    
+    static var mock: User {
+        return User(
+            id: 1,
+            firstName: "John",
+            lastName: "Doe",
+            maidenName: "Smith",
+            age: 30,
+            gender: .male,
+            email: "johndoe@example.com",
+            phone: "+1 234 567 890",
+            username: "johndoe",
+            password: "securepassword",
+            birthDate: "1993-04-15",
+            image: Constants.randomImage,
+            bloodGroup: "O+",
+            height: 180.0,
+            weight: 75.5,
+            eyeColor: "Brown",
+            hair: Hair(color: "Black", type: .straight),
+            ip: "192.168.1.1",
+            address: Address(
+                address: "123 Main St",
+                city: "Los Angeles",
+                state: "California",
+                stateCode: "CA",
+                postalCode: "90001",
+                coordinates: Coordinates(lat: 34.0522, lng: -118.2437),
+                country: .unitedStates
+            ),
+            macAddress: "00:1B:44:11:3A:B7",
+            university: "MIT",
+            bank: Bank(
+                cardExpire: "12/26",
+                cardNumber: "1234-5678-9012-3456",
+                cardType: "Visa",
+                currency: "USD",
+                iban: "US123456789012345678901"
+            ),
+            company: Company(
+                department: "Engineering",
+                name: "Tech Corp",
+                title: "Software Engineer",
+                address: Address(
+                    address: "456 Corporate Blvd",
+                    city: "San Francisco",
+                    state: "California",
+                    stateCode: "CA",
+                    postalCode: "94105",
+                    coordinates: Coordinates(lat: 37.7749, lng: -122.4194),
+                    country: .unitedStates
+                )
+            ),
+            ein: "12-3456789",
+            ssn: "123-45-6789",
+            userAgent: "Mozilla/5.0",
+            crypto: Crypto(
+                coin: .bitcoin,
+                wallet: .the0Xb9Fc2Fe63B2A6C003F1C324C3Bfa53259162181A,
+                network: .ethereumERC20
+            ),
+            role: .user
+        )
+    }
 }
 
 // MARK: - Address
