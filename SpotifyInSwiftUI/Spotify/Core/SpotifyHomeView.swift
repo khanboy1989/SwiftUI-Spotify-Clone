@@ -7,8 +7,10 @@
 
 import SwiftUI
 import SwiftfulUI
+import SwiftfulRouting
 
 struct SpotifyHomeView: View {
+    @Environment(\.router) var router
     @State private var products: [Product] = []
     @State private var productRows: [ProductRow] = []
     @State private var currentUser: User? = nil
@@ -49,7 +51,7 @@ struct SpotifyHomeView: View {
                         .clipShape(Circle())
                         .scaledToFill()
                         .onTapGesture {
-                            
+                            router.dismissScreen()
                         }
                 }
             }
@@ -72,20 +74,27 @@ struct SpotifyHomeView: View {
         .background(.spotifyBlack)
     }
     
+    private func gotoPlaylistView(product: Product) {
+        guard let currentUser else { return }
+        router.showScreen(.push) { _ in
+            SpotifyPlaylistView(product: product, user: currentUser)
+        }
+    }
+    
     // Recents Section
     private var recentsSection: some View {
         NonLazyVGrid(columns: 2, alignment: .center, spacing: 10, items: self.products) { product in
-            
             if let product {
                 SpotifyRecentsCell(
                     imageName: product.firstImage,
                     title: product.title
                 ).asButton(.press) {
-                    
+                    gotoPlaylistView(product: product)
                 }
             }
         }
     }
+    
     
     private var listRows: some View {
         ForEach(productRows) { row in
@@ -104,7 +113,7 @@ struct SpotifyHomeView: View {
                                 imageName: product.firstImage,
                                 title: product.title
                             ).asButton(.press) {
-                                
+                                gotoPlaylistView(product: product)
                             }
                         }
                     }.padding(.horizontal, 16)
@@ -126,11 +135,12 @@ struct SpotifyHomeView: View {
                 
             },
             onPlayPreseed: {
-                
+                gotoPlaylistView(product: product)
             }
         )
     }
     func fetchProducts() async throws {
+        guard products.isEmpty else { return }
         do {
             let helper = DatabaseHelper()
             products = try await Array(helper.getProducts().prefix(8))
@@ -151,5 +161,7 @@ struct SpotifyHomeView: View {
 }
 
 #Preview {
-    SpotifyHomeView()
+    RouterView { _ in
+        SpotifyHomeView()
+    }
 }
