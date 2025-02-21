@@ -10,10 +10,27 @@ This project is a SwiftUI-based clone of Spotify's home view and playlist view, 
 
 ## Screenshots
 
-![Simulator Screenshot - iPhone 16 Pro - 2025-02-21 at 21 40 31](https://github.com/user-attachments/assets/e84155f6-af4b-47be-ae8f-a39730308638)
-![Simulator Screenshot - iPhone 16 Pro - 2025-02-21 at 21 40 34](https://github.com/user-attachments/assets/f1b68dee-578c-4cf5-accc-c53c4eb902f3)
-![Simulator Screenshot - iPhone 16 Pro - 2025-02-21 at 21 40 38](https://github.com/user-attachments/assets/c19b4da0-acaf-4ca7-b93c-97ac56c4c9fc)
-![Simulator Screenshot - iPhone 16 Pro - 2025-02-21 at 21 40 43](https://github.com/user-attachments/assets/76efcdbe-6050-45e6-ba02-51f180c353a5)
+| Home View | Playlist View |
+|-----------|--------------|
+| ![Home](https://github.com/user-attachments/assets/e84155f6-af4b-47be-ae8f-a39730308638) | ![Playlist](https://github.com/user-attachments/assets/f1b68dee-578c-4cf5-accc-c53c4eb902f3) |
+
+| Products List | Categories View |
+|--------------|----------------|
+| ![Products](https://github.com/user-attachments/assets/c19b4da0-acaf-4ca7-b93c-97ac56c4c9fc) | ![Categories](https://github.com/user-attachments/assets/76efcdbe-6050-45e6-ba02-51f180c353a5) |
+
+## Package Dependencies
+
+The following dependencies are used in this project:
+
+- **SDWebImage** - 5.20.0
+- **SDWebImageSwiftUI** - 3.1.3
+- **SwiftfulRecursiveUI** - 1.0.2
+- **SwiftfulRouting** - 5.3.6
+- **SwiftfulUI** - 1.2.0
+
+| Package Dependencies | Minimum Deployment |
+|----------------------|--------------------|
+| ![Packages](https://github.com/user-attachments/assets/Fj2Q6zmR4boERei6qE67sx) | ![Min Deployment](https://github.com/user-attachments/assets/WdpFfzPXUTkFZCMk5mvt2s) |
 
 ## API Integration
 The app fetches product and user data from DummyJSON API:
@@ -69,4 +86,3 @@ This project is inspired by Nick Sarno’s SwiftUI course. You can follow the tu
 
 ## License
 This project is open-source and available under the MIT License.
-
