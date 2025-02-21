@@ -28,10 +28,6 @@ The following dependencies are used in this project:
 - **SwiftfulRouting** - 5.3.6
 - **SwiftfulUI** - 1.2.0
 
-| Package Dependencies | Minimum Deployment |
-|----------------------|--------------------|
-| ![Packages](https://github.com/user-attachments/assets/Fj2Q6zmR4boERei6qE67sx) | ![Min Deployment](https://github.com/user-attachments/assets/WdpFfzPXUTkFZCMk5mvt2s) |
-
 ## API Integration
 The app fetches product and user data from DummyJSON API:
 
